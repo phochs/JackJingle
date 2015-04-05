@@ -17,6 +17,7 @@ public class Screen extends JPanel {
     public Screen() {
         super(true);
 
+        // Create settings if it doesn't exist yet
         File settings = new File("config/jingles.txt");
         if(!settings.exists())
             try {

@@ -3,7 +3,7 @@ package screen;
 import java.awt.*;
 
 /**
- * Created by pijke on 05/04/15.
+ * Created by phochs on 05/04/15.
  */
 public class SystemButton extends Button {
     public SystemButton(String name) {

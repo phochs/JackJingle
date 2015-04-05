@@ -4,7 +4,7 @@ import javax.swing.*;
 import java.awt.*;
 
 /**
- * Created by pijke on 05/04/15.
+ * Created by phochs on 05/04/15.
  */
 public abstract class Button extends JTextPane {
     protected Color backgroundDefault = new Color(129, 223, 112);

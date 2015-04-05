@@ -12,7 +12,7 @@ import java.io.PrintWriter;
 import java.io.Writer;
 
 /**
- * Created by pijke on 04/04/15.
+ * Created by phochs on 04/04/15.
  */
 public class Screen extends JPanel {
     JFrame drawing;
@@ -126,7 +126,7 @@ public class Screen extends JPanel {
 
     public void saveButtons() {
         try {
-            PrintWriter file = new PrintWriter("/home/pijke/IdeaProjects/JackJingle/config/jingles.txt");
+            PrintWriter file = new PrintWriter("/home/phochs/IdeaProjects/JackJingle/config/jingles.txt");
             for(int i=0;i<jingleButtons.length;i++) {
                 if(jingleButtons[i].musicFile != null)
                 file.println(i + ":" + jingleButtons[i].musicFile);

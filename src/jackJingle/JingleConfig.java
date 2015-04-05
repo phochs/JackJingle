@@ -6,14 +6,14 @@ import java.util.Arrays;
 import java.util.Scanner;
 
 /**
- * Created by pijke on 04/04/15.
+ * Created by phochs on 04/04/15.
  */
 public class JingleConfig {
     public String[] config = new String[64];
     public JingleConfig() {
         Scanner reader = null;
         try {
-            reader = new Scanner(new File("/home/pijke/IdeaProjects/JackJingle/config/jingles.txt"));
+            reader = new Scanner(new File("/home/phochs/IdeaProjects/JackJingle/config/jingles.txt"));
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }

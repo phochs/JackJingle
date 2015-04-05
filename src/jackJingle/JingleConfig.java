@@ -13,7 +13,7 @@ public class JingleConfig {
     public JingleConfig() {
         Scanner reader = null;
         try {
-            reader = new Scanner(new File("/home/phochs/IdeaProjects/JackJingle/config/jingles.txt"));
+            reader = new Scanner(new File("config/jingles.txt"));
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }

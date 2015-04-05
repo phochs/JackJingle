@@ -6,10 +6,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
-import java.io.BufferedWriter;
-import java.io.FileNotFoundException;
-import java.io.PrintWriter;
-import java.io.Writer;
+import java.io.*;
 
 /**
  * Created by phochs on 04/04/15.
@@ -19,6 +16,14 @@ public class Screen extends JPanel {
     JingleButton[] jingleButtons = new JingleButton[64];
     public Screen() {
         super(true);
+
+        File settings = new File("config/jingles.txt");
+        if(!settings.exists())
+            try {
+                settings.createNewFile();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
 
         //setLayout(new BorderLayout());
 

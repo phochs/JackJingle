@@ -7,8 +7,8 @@ import java.awt.*;
  * Created by phochs on 05/04/15.
  */
 public abstract class Button extends JTextPane {
-    protected Color backgroundDefault = new Color(129, 223, 112);
-    protected Color backgroundPressed = new Color(220, 110, 110);
+    public Color backgroundDefault = new Color(129, 223, 112);
+    public Color backgroundPressed = new Color(220, 110, 110);
 
     public Button() {
         super();

@@ -69,6 +69,7 @@ public class JingleButton extends Button {
     public void initButton(String filename) {
         if(filename != null) {
             musicFile = filename;
+            clearButton();
             setBackground(backgroundDefault);
 
             String name = musicFile.substring(musicFile.lastIndexOf("/")+1);
@@ -76,6 +77,9 @@ public class JingleButton extends Button {
             setText(name);
 
             loadFile();
+        } else {
+            musicFile = filename;
+            clearButton();
         }
     }
 
@@ -181,5 +185,10 @@ public class JingleButton extends Button {
                 return true;
         }
         return false;
+    }
+
+    public void clearButton() {
+        setBackground(new Color(214, 214, 214));
+        setText("");
     }
 }

@@ -6,7 +6,10 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
-import java.io.*;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.PrintWriter;
 
 /**
  * Created by phochs on 04/04/15.
@@ -14,23 +17,19 @@ import java.io.*;
 public class Screen extends JPanel {
     JFrame drawing;
     JingleButton[] jingleButtons = new JingleButton[64];
+    int currentPage = 0;
+
     public Screen() {
         super(true);
 
         // Create settings if it doesn't exist yet
-        File settings = new File("config/jingles.txt");
-        if(!settings.exists())
-            try {
-                settings.createNewFile();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+        checkJingleFile(currentPage);
 
         //setLayout(new BorderLayout());
 
         setLayout(new GridLayout(8, 8, 2, 2));
 
-        drawing = new JFrame("JackJingle");
+        drawing = new JFrame("JackJingle page A");
         drawing.setLayout(new BorderLayout(10, 0));
         drawing.setSize(1000, 800);
 
@@ -41,6 +40,54 @@ public class Screen extends JPanel {
         drawing.setLocationRelativeTo(null);
         drawing.add(this, BorderLayout.CENTER);
 
+        drawSidebar();
+        drawTop();
+
+        drawing.setVisible(true);
+    }
+
+    public void initButtons() {
+        for (int i = 0; i < 64; i++) {
+            jingleButtons[i] = new JingleButton(i);
+            add(jingleButtons[i]);
+        }
+    }
+
+    public void loadConfig() {
+        JingleConfig config = new JingleConfig(currentPage);
+
+        for (int i = 0; i < 64; i++) {
+            jingleButtons[i].initButton(config.config[i]);
+        }
+    }
+
+    public void saveButtons() {
+        try {
+            checkJingleFile(currentPage);
+            PrintWriter file = new PrintWriter("config/jingles." + currentPage + ".txt");
+            for(int i=0;i<jingleButtons.length;i++) {
+                if(jingleButtons[i].musicFile != null)
+                file.println(currentPage + ":" + i + ":" + jingleButtons[i].musicFile);
+            }
+            file.close();
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+
+    }
+
+    public void checkJingleFile(int page) {
+        File settings = new File("config/jingles." + page + ".txt");
+        if(!settings.exists()) {
+            try {
+                settings.createNewFile();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    public void drawSidebar() {
         JPanel sidebar = new JPanel();
         sidebar.setLayout(new GridLayout(9, 1, 5, 2));
 
@@ -111,36 +158,57 @@ public class Screen extends JPanel {
 
         sidebar.add(stopAll);
         drawing.add(sidebar, BorderLayout.EAST);
-
-        drawing.setVisible(true);
     }
 
-    public void initButtons() {
-        for (int i = 0; i < 64; i++) {
-            jingleButtons[i] = new JingleButton(i);
-            add(jingleButtons[i]);
+    public void drawTop() {
+        JPanel top = new JPanel();
+        top.setLayout(new GridLayout(1, 8, 2, 2));
+
+        final String[] pages = {"A", "B", "C", "D", "E", "F", "G", "H"};
+
+        for(int i=0;i<8;i++){
+            final PageButton button = new PageButton(pages[i], i);
+            button.addMouseListener(new MouseListener() {
+                @Override
+                public void mouseClicked(MouseEvent e) {
+                    switchPage(button.page);
+                }
+
+                @Override
+                public void mousePressed(MouseEvent e) {
+
+                }
+
+                @Override
+                public void mouseReleased(MouseEvent e) {
+
+                }
+
+                @Override
+                public void mouseEntered(MouseEvent e) {
+
+                }
+
+                @Override
+                public void mouseExited(MouseEvent e) {
+
+                }
+            });
+            top.add(button);
         }
+
+        drawing.add(top, BorderLayout.NORTH);
     }
 
-    public void loadConfig() {
-        JingleConfig config = new JingleConfig();
+    public void switchPage(int newPage) {
+        System.out.println("Switching page to " + newPage);
+        currentPage = newPage;
 
-        for (int i = 0; i < 64; i++) {
-            jingleButtons[i].initButton(config.config[i]);
-        }
-    }
+        checkJingleFile(currentPage);
 
-    public void saveButtons() {
-        try {
-            PrintWriter file = new PrintWriter("/home/phochs/IdeaProjects/JackJingle/config/jingles.txt");
-            for(int i=0;i<jingleButtons.length;i++) {
-                if(jingleButtons[i].musicFile != null)
-                file.println(i + ":" + jingleButtons[i].musicFile);
-            }
-            file.close();
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        }
+        final String[] pages = {"A", "B", "C", "D", "E", "F", "G", "H"};
+        drawing.setTitle("JackJingle page " + pages[newPage]);
 
+        loadConfig();
     }
 }

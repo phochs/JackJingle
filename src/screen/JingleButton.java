@@ -173,6 +173,7 @@ public class JingleButton extends Button {
         });*/
         //player.pause();
         player.closeStream();
+        player = null;
         loadFile();
 
         //stopping.start();

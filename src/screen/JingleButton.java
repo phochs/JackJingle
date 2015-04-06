@@ -190,5 +190,6 @@ public class JingleButton extends Button {
     public void clearButton() {
         setBackground(new Color(214, 214, 214));
         setText("");
+        player = null;
     }
 }

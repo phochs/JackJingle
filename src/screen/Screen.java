@@ -10,6 +10,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.Arrays;
 
 /**
  * Created by phochs on 04/04/15.
@@ -91,9 +92,57 @@ public class Screen extends JPanel {
         JPanel sidebar = new JPanel();
         sidebar.setLayout(new GridLayout(9, 1, 5, 2));
 
-        for(int i=0;i<7;i++){
+        for(int i=0;i<6;i++){
             sidebar.add(new SystemButton(""));
         }
+
+        SystemButton loadFiles = new SystemButton("Load page\nfrom directory");
+        loadFiles.addMouseListener(new MouseListener() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                JFileChooser dirChooser = new JFileChooser();
+                dirChooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
+                int fileResult = dirChooser.showOpenDialog(null);
+                if(fileResult == JFileChooser.APPROVE_OPTION) {
+                    File dirname = dirChooser.getSelectedFile();
+                    System.out.println(dirname.toString());
+                    String[] files = dirname.list();
+                    Arrays.sort(files);
+                    java.util.List<String> extensions = Arrays.asList("Music files", "mp3", "mp2", "ogg", "wav", "flac");
+                    for(int i=0;i<files.length;i++) {
+                        if(i >= 64)
+                            break;
+                        String ext = files[i].substring(files[i].lastIndexOf("/")+1);
+                        ext = ext.substring(ext.lastIndexOf(".")+1);
+                        if(!extensions.contains(ext))
+                            continue;
+
+                        jingleButtons[i].initButton(dirname.toString() + "/" + files[i]);
+                    }
+                }
+            }
+
+            @Override
+            public void mousePressed(MouseEvent e) {
+
+            }
+
+            @Override
+            public void mouseReleased(MouseEvent e) {
+
+            }
+
+            @Override
+            public void mouseEntered(MouseEvent e) {
+
+            }
+
+            @Override
+            public void mouseExited(MouseEvent e) {
+
+            }
+        });
+        sidebar.add(loadFiles);
 
         SystemButton saveButton = new SystemButton("Save config");
         saveButton.addMouseListener(new MouseListener() {
